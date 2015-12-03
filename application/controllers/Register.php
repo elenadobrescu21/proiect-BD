@@ -54,7 +54,7 @@ public function index() {
 		{
 			//insert update table here
 			$this->model_employee->insert($params);
-			$this->load->view('successful_employee');			
+			redirect('Welcome/index');		
 		}
 							
 	}

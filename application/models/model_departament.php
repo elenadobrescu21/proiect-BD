@@ -19,8 +19,18 @@ class Model_departament extends CI_Model {
 		settype($id_ang, "integer"); */
 		$sql = "insert into departament(Nume_dep, Id_manager) values('$params[Nume_dep]', $id )";
 		$this->db->query($sql); 
-		
-		
+			
+	}
+	
+	public function departament_manager() {
+		$query = $this->db->query(' select  departament.id_departament, departament.Nume_dep, angajat.Nume, angajat.Prenume from departament left join angajat on angajat.idAngajat = departament.Id_manager order
+ by departament.Nume_dep');
+		 if($query->num_rows() > 0) {
+			foreach($query->result() as $row) {
+				$data[] = $row;
+			}
+		}
+		return $data;		 
 	}
 	
 

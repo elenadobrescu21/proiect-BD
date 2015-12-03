@@ -1,21 +1,44 @@
 <?php
 class update_ctrl extends CI_Controller{
-function __construct(){
-parent::__construct();
-$this->load->model(array('model_employee', 'model_departament', 'model_serviciu'));
+	function __construct(){
+	parent::__construct();
+	$this->load->model(array('model_employee', 'model_departament', 'model_serviciu'));
 
 }
 
-function show_angajat_id() {
-$id = $this->uri->segment(3);
-$data['angajati'] = $this->model_employee->get_all_employees();
-$data['single_angajat'] = $this->model_employee->show_angajat_id($id);
-$data['departament'] = $this->model_departament->get_all_departments();
-$this->load->view('edit', $data);
-}
+	function show_angajat_id() {
+		$id = $this->uri->segment(3);
+		$data['angajati'] = $this->model_employee->get_all_employees();
+		$data['single_angajat'] = $this->model_employee->show_angajat_id($id);
+		$data['departament'] = $this->model_departament->get_all_departments();
+		$this->load->view('edit', $data);
+  }
+	function show_serviciu_id() {
+		$id = $this->uri->segment(3);
+		$data['servicii'] = $this->model_serviciu->get_all_services();
+		$data['single_serviciu'] = $this->model_serviciu->show_serviciu_id($id);
+		$data['departament'] = $this->model_departament->get_all_departments();
+		$this->load->view('edit_serviciu', $data);
+		
+	}
+	
+	
+	function update_serviciu_id1() {
+		$id = $this->input->post('did');
+		$nume = $this->input->post('nume_serviciu');
+		$pret = $this->input->post('pret_serviciu');
+		$data = array("Nume_serviciu" => $nume,
+		              "Pret" => $pret);
+		$this->model_serviciu->update_serviciu_id($id,$data);
+		$this->show_serviciu_id();
+				
+		redirect('Serviciu/lista_servicii');
+		
+	}
+
 
 function update_angajat_id1() {
-		$id= $this->input->post('did');
+		 $id= $this->input->post('did');
 		 $yearOfBirth = $this->input->post('yearOfBirth');
 		 $monthOfBirth = $this->input->post('monthOfBirth');
 		 $dateOfBirth = $this->input->post('dateOfBirth');
@@ -42,13 +65,19 @@ function update_angajat_id1() {
 					$this->model_employee->update_angajat_id1($id,$data);
 							$this->show_angajat_id();
 				
-			redirect('Welcome/index');
+			redirect('Angajati');
 		}
+		
+	public function delete_serviciu($serviciu_id) {
+		$this->db->where('Id_serviciu', $serviciu_id);
+		$this->db->delete('serviciu');
+		redirect('Serviciu/lista_servicii');
+	}
 		
 	public function delete($angajat_id) {
 		$this->db->where('idAngajat', $angajat_id);
 		$this->db->delete('angajat');
-		redirect('Welcome/index');
+		redirect('Angajati');
 	}
 }
 ?>

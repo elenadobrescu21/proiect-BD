@@ -25,6 +25,9 @@
 	margin-right: auto;
 	margin-top: 20px;
 }
+.hidden {
+	display: none;
+}
 </style>
 <body>
 <h2 class="title"> Edit angajati </h2>
@@ -32,8 +35,10 @@
 	<?php foreach ($single_angajat as $r): ?>
 	<form action='<?php echo site_url('update_ctrl/update_angajat_id1') ?>' method="POST" class="form-horizontal">
 	<div class=" register-form form-group col-lg-6">
+	<div class="hidden">
 	<label id="hide">Id :</label>
 		<input type="text" id="hide" name="did" value="<?php echo $r->idAngajat; ?>">
+	</div>
 	<div>
 	<label for="Nume" class="control-label"> Nume </label>
 	<input type="text" value="<?php echo $r->Nume ?>" class="form-control" name="nume_angajat" placeholder="Nume angajat" />
@@ -126,7 +131,6 @@
 	</form>
 	<?php endforeach; ?>
 	<? php echo validation_errors(); ?>
-
 
 
 </div>

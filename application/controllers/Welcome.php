@@ -22,9 +22,11 @@ class Welcome extends CI_Controller {
 	{
 		//$this->load->view('contact');
 		//$this->load->view('angajati');
-		$this->load->model(array('model_employee'));
-		$data['dt'] = $this->model_employee->get_all_employees();
-		$this->load->view('lista_angajati', $data);
+		//$this->load->model(array('model_employee'));
+		//$data['dt'] = $this->model_employee->get_all_employees();
+		//$data['ang'] = $this->model_employee->count_all_employees();
+	    //$this->load->view('lista_angajati', $data);
+		$this->load->view('front_page.html');
 	}
 	
 	public function register_employee() {

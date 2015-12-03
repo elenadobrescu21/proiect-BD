@@ -25,6 +25,31 @@ class Model_serviciu extends CI_Model {
 			
 	}
 	
+	public function serviciu_departament() {
+		$query = $this->db->query('select serviciu.Id_serviciu, serviciu.Nume_serviciu, serviciu.Pret, departament.Nume_dep from serviciu left
+       join departament on departament.id_departament=serviciu.Id_dep order by departament.Nume_dep');
+	   if($query->num_rows() > 0) {
+			foreach($query->result() as $row) {
+				$data[] = $row;
+			}
+		}	
+		return $data;
+	}
+	
+	public function show_serviciu_id($data) {
+		    $this->db->select('*');
+			$this->db->from('serviciu');
+			$this->db->where('Id_serviciu', $data);
+			$query = $this->db->get();
+			$result = $query->result();
+			return $result;
+	}
+	
+	function update_serviciu_id($id,$data){
+		$this->db->where('Id_serviciu', $id);
+		$this->db->update('serviciu', $data);
+  }
+	
 	public function get_all_services() {
 		
 		$query = $this->db->query('select * from serviciu');
@@ -32,8 +57,7 @@ class Model_serviciu extends CI_Model {
 			foreach($query->result() as $row) {
 				$data[] = $row;
 			}
-		}
-		
+		}	
 		return $data;
 	}
 	

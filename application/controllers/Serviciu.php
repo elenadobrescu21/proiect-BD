@@ -9,6 +9,11 @@ class Serviciu extends CI_Controller {
 		
 	}
 	
+	public function lista_servicii() {
+		$data['serv'] = $this->model_serviciu->serviciu_departament();
+		$this->load->view('lista_servicii', $data);
+	}
+	
 	public function index () {
 		
 		$data['departament'] = $this->model_departament->get_all_departments();

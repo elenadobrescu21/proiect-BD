@@ -9,6 +9,11 @@ class Departament extends CI_Controller {
 		
 	}
 	
+	public function lista_departamente() {
+		$data['dt'] = $this->model_departament->departament_manager();
+		$this->load->view('lista_departamente', $data);
+	}
+	
 	public function index () {
 		
 		$data['dt'] = $this->model_employee->get_all_employees();
