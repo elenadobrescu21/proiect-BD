@@ -1,12 +1,24 @@
 <html>
 
 <head>
-<title> Create account  </title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<title> Create account  </title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 
 <style>
-
+#register_form {
+	margin-top:50px;
+	text-align:center;
+	height:600px;
+	width:400px;
+	margin-left:auto;
+	margin-right:auto;
+}
+.buton{
+	margin-top:10px;
+}
 
 </style>
 
@@ -37,7 +49,7 @@
 	</div>
 	<div>
 	<label for="Confirm pass" class="control-label"> Confirm password </label>
-	<input type="password" class="form-control" name="password_confirm" placeholder="First name" />
+	<input type="password" class="form-control" name="password_confirm" placeholder="Confirm password" />
 	</div>
 	<div>
 	<label for="Email" class="control-label"> Email </label>
@@ -48,13 +60,13 @@
 	<input type="text" class="form-control" name="telephone" placeholder="Telephone" />
 	
 	
-	</div>	
 	
-	<div>
-	<button type="submit" name="submit" value="Save" class="btn btn-primary" > Adauga</button> 
+	<div class="buton">
+	<button type="submit" name="submit" value="Save" class="btn btn-primary" > Create account</button> 
 	</div>
 
 </form>
 
+	</div>	
 </body>
 </html>
