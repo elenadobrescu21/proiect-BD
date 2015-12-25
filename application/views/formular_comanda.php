@@ -4,8 +4,41 @@
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  
 
 </head>
+
+<script>
+
+jQuery(document).ready(function(){
+      $("#serviciu").change(function() {
+        var serviciu_id = $('#serviciu').val();
+        console.log(serviciu_id);
+
+        $.ajax({
+          type: "POST",
+          data: serviciu_id,
+          url: "<?= base_url() ?>Formular_comanda/get_angajati/" + serviciu_id ,
+
+          success: function(data){
+			  $('#angajat').empty();
+            $.each(data, function(i, val){
+		     var spatiu = " ";
+            $('#angajat').append("<option value='"+i+"'>"+val+"</option>");
+			 console.log(data.name);
+            console.log(data.id_type)
+            });
+           }
+        
+         });
+       });
+     });
+
+
+
+
+
+</script>
 	
 <style>
 .my-container {
@@ -92,6 +125,14 @@ img {
 .big-contentbar h3, .big-contentbar h4{
 		font-family:Cardo;
 }
+.hidden {
+	display:none;
+}
+.formular{
+	margin-top:20px;
+	margin-bottom:20px;
+}
+
 
 </style>
 <body>
@@ -111,7 +152,7 @@ img {
 					<ul class="nav-list">
 					<li class="first-item"><a class="item1" href="Echipa/index"><h4>Echipa<h4></a> </li>
 					<li class="second-item"><a class="item2" href="Lista_servicii/index"><h4>Servicii si preturi<h4></a> </li>
-					<li class="third-item"> <a class="item3" href="Formular_comanda"><h4>Formular comanda</h4></a> </li>
+					<li class="third-item"> <a class="item3" href="#"><h4>Formular comanda</h4></a> </li>
 					</ul>
 					</div>
 					<h1> Important !</h1>
@@ -123,30 +164,72 @@ img {
 	       
 			
 			<div class="col-lg-8">
-			 <div class="big-contentbar">
-			 	<img src="http://i65.tinypic.com/sp7m7n.jpg" alt="Banner"> 
-			<h1> Bine ati venit la Home Serv !</h1>
-			
-			<h3> Home Serv SRL va sta la dispozitie cu urmatoarele servicii: </h3>
-		         <ul id="lista_servicii">
-	<?php foreach($deps as $d) { 
-             ?>   <li class="menu_item menu_item_one activ">
-                 <h4> <?php echo $d->Nume_dep ?></h4>
-                </li>
-	<?php }
-  ?>	
-            </ul>
+			<div class = "big-contentbar">
 				
-		<h2>Welcome <?php echo $username; ?>!</h2>
-		    <a href="Home/logout">Logout</a>
+		<h2>Formular comanda</h2>
+		<h3> Nume client:  <?php echo $Nume . " " .$Prenume  ; ?> </h3>
+		  
+			<form action="Formular_comanda/add_to_comanda" method="POST" class="form-comanda form-horizontal">
+				<div class="hidden">
+					<input type="text" value="<?= $id ?>" class="form-control" name="client_id" placeholder="Id client" />	
+				</div>
+				<div class="formular">
+			<label for="Serviciu" class="control-label"> Alegeti serviciu </label>
+			<select id="serviciu" name="serviciu">
+			<option value=""> </option>
+		<?php foreach($servicii as $row) {
+			?> <option value="<?= $row->Id_serviciu ?>" name="serviciu"> <?php  echo $row->Nume_serviciu; ?> </option>
+			<?php   
+		} ?>
+		  </select>
+		  </div>
+		  <div class="formular">
+		<label for="angajat">Alegeti angajat</label> 
+		<select id="angajat" name="angajat" > 
+            <option value="" name ="angajat"></option>
+        </select>  
+			</div>
+			<div class="formular">
+			<label for="angajat">Alegeti data</label> 
+			<select name="luna" class="input-select ">
+				<option value="">Luna</option>
+				<?php for ($i = 1; $i <= 12; $i++) : ?>
+				<option value="<?php echo ($i < 10) ? '0'.$i : $i; ?>"><?php echo $i; ?></option>
+				<?php endfor; ?>
+				</select>
+			<select name="data" class="input-select ">
+					<option value="">Zi</option>
+					<?php for ($i = 1; $i <= 31; $i++) : ?>
+					<option value="<?php echo ($i < 10) ? '0'.$i : $i; ?>"><?php echo $i; ?></option>
+					<?php endfor; ?>
+			</select>
+			
+			</div>
+			<div class="formular">
+			<label for="ora">Alegeti ora</label> 
+				<select name="ora" class="input-select ">
+					<option value="">Ora</option>
+					<?php for ($i = 9; $i <= 17; $i++) : ?>
+					<option value="<?php echo ($i < 10) ? '0'.$i : $i; ?>"><?php echo $i; ?></option>
+					<?php endfor; ?>
+				</select>
+			
+				
+			</div>
+			
+			<button type="submit" name="submit" value="Save" class="adauga btn btn-primary" > Trimite </button> 
+			</form>
+			  <a href="Home/logout">Logout</a>
+			</div>
+			
 		</div>
 
 
 			 </div>
 			</div>
-			 </div>
-			 </div>
-	</div>
+			
+			
+
 	
 			
 

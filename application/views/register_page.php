@@ -28,7 +28,7 @@
  <h1> Create account </h1>
  
  
-<form action="Login/create_member" method="POST" class="form-horizontal">
+<form action="<?php echo base_url() . "Login/create_member" ?>" method="POST" class="form-horizontal">
 
 	<div>
 	<label for="Nume" class="control-label"> Nume </label>

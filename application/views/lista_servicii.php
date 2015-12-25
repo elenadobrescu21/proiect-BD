@@ -66,7 +66,7 @@ h4{
 
  <div class="adauga">          
 	<button class="buton btn btn-default  btn-lg"> <a href="index">Adauga serviciu  </a>  </button>
-	<button class="buton btn btn-default btn-lg"> <a href='<?php echo site_url('Admin') ?>''>Back to admin panel</a>  </button> 
+	<button class="buton btn btn-default btn-lg"> <a href='<?php echo site_url('Admin') ?>'>Back to admin panel</a>  </button> 
  </div>
  
 

@@ -61,4 +61,18 @@ class Model_serviciu extends CI_Model {
 		return $data;
 	}
 	
+	function get_servicii_by_departament ($departament){
+		$sql = 'select Nume_serviciu, Pret from serviciu where Id_dep = ?';
+	    $query = $this->db->query($sql, $departament);
+        $servicii = array();
+        if($query->result()){
+            foreach ($query->result() as $serviciu) {
+                $servicii[$serviciu->Nume_serviciu] = $serviciu->Pret;
+            }
+            return $servicii;
+        } else {
+            return FALSE;
+        }
+    } 
+	
 }

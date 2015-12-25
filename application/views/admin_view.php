@@ -63,12 +63,12 @@
 	<div class="row">
 		<div class="angajati col-md-4">
 	<div class="buton">
-	 <button class="buton-main btn btn-default  btn-lg"> <a href="Angajati">Clienti </a>  </button>
+	 <button class="buton-main btn btn-default  btn-lg"> <a href="Clienti">Clienti </a>  </button>
 	 </div>
 	</div>
 	<div class="departamente col-md-4">
 	<div class="buton">
-	 <button class="buton-main btn btn-default  btn-lg"> <a href="Departament/lista_departamente">Comenzi </a>  </button>
+	 <button class="buton-main btn btn-default  btn-lg"> <a href="Comanda">Comenzi </a>  </button>
 	 </div>
     </div>
 	<div class="servicii col-md-4">

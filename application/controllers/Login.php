@@ -18,37 +18,15 @@ class Login extends CI_Controller {
 		$this->load->view('login_form');
 	}
 	
-	/*public function validate_credentials() {
-		//$this->load->view('login_form');
-		$this->load->model('model_user');
-		$query = $this->model_user->validate();
-		
-		if($query) {
-			$data = array(
-			'username' => $this->input->post('username'),
-			'is_logged_in' =>true);
-			$this->session->set_userdata($data);
-			
-		if($this->form_validation->run() == FALSE)
-		   {
-			 //Field validation failed.  User redirected to login page
-			 $this->load->view('login_form');
-		   }
-		   else
-		   {
-			 //Go to private area
-		     $this->load->view('members_only');
-		   }
-		 
-			//$this->load->view('members_only');
-		}
-		
-	} */
+	public function register_form() {
+		$this->load->view('register_page');
+	}
+	
 	
 	public function create_member() {
 		
 		$this->load->library('form_validation');
-		$this->load->view('register_page');
+		//$this->load->view('register_page');
 		//validation rules
 		$msg="";
 		

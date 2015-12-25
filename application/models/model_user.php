@@ -7,74 +7,100 @@ class Model_user extends CI_Model {
 	function __construct() {
 		parent::__construct();
 	}
-	
-	/*public function validate() {
-		$this->db->where('user_login', $this->input->post('username'));
-		$this->db->where('user_pass', md5($this->input->post('password')));
-		$query = $this->db->get('ci_users');
-		if($query->num_rows() == 1) {
-			return true; 
-		}
-	} */
+
 	
 	function login($username, $password)
  {
-	   $this -> db -> select('id_users, user_login, user_pass');
-	   $this -> db -> from('ci_users');
-	   $this -> db -> where('user_login', $username);
+	   $this -> db -> select(' client_id, username, user_pass, Nume, Prenume');
+	   $this -> db -> from('clienti');
+	   $this -> db -> where('username', $username);
 	   $this -> db -> where('user_pass', MD5($password));
-	   $this -> db -> limit(1);
+	  // $this -> db -> limit(1);
 	 
 	   $query = $this -> db -> get();
+	   
+	   if($query->num_rows() > 0) {
+			foreach($query->result() as $row) {
+				$data[] = $row;
+			}
+		}
+		
+		return $data;
 	 
-	   if($query -> num_rows() == 1)
-	   {
-		 return $query->result();
-	   }
-	   else
-	   {
-		 return false;
-	   }
  }
 	
 	public function create_user() {
 		
-		$fields= array('user_login' => $this->input->post('username'),
+		$fields= array('username' => $this->input->post('username'),
 					  'user_pass' =>md5( $this->input->post('password')),
 					  'user_email' => $this->input->post('email'),
 					  'telephone' => $this->input->post('telephone'),
-					  'first_name' => $this->input->post('first_name'),
-					  'last_name' => $this->input->post('last_name') ) ;
+					  'Nume' => $this->input->post('first_name'),
+					  'Prenume' => $this->input->post('last_name') ) ;
 		
-		$this->db->insert('ci_users', $fields);
+		$this->db->insert('clienti', $fields);
 				
 	}
-	/*
-	function show_angajat_id($data){
-			$this->db->select('*');
-			$this->db->from('angajat');
-			$this->db->where('idAngajat', $data);
-			$query = $this->db->get();
-			$result = $query->result();
-			return $result;
-}
-	function update_angajat_id1($id,$data){
-		$this->db->where('idAngajat', $id);
-		$this->db->update('angajat', $data);
-}
+	
 
-	function count_all_employees() {
-		$query = $this->db->query('select COUNT(*) as TotalAngajati from angajat');
+	function count_all_clients() {
+		$query = $this->db->query('select COUNT(*) as TotalClienti from clienti');
 		foreach($query->result() as $row) {
-			$data['TotalAngajati'] = $row;
+			$data['TotalClienti'] = $row;
 		}
 		return $data;
 	}
 	
+	function get_user_id($username) {
+		$sql = 'select client_id from clienti where username = 1';
+		$query = $this->db->query($sql, $username);
+		if($query->num_rows() > 0) {
+			foreach($query->result() as $row) {
+				$data[] = $row;
+			}
+		}
+		
+		return $data;
+		
+	}
+	
+	function clienti_fara_comenzi() {
+		$sql = 'select Nume, Prenume from (select Cl.client_id, Cl.Nume, Cl.Prenume, (select COUNT(*) from comanda C 
+				where C.id_client = Cl.client_id) as Numar_comenzi from clienti Cl group by Cl.client_id, Cl.Nume, Cl.Prenume having
+				Numar_comenzi = 0) as Com';
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0) {
+			foreach($query->result() as $row) {
+				$data[] = $row;
+			}
+		}
+		
+		return $data;
+		
+	}
+	
+	function clienti_x_comenzi($numar_comenzi) {
+		$sql = 'select Nume, Prenume from (select Cl.client_id, Cl.Nume, Cl.Prenume, (select COUNT(*) from comanda C 
+				where C.id_client = Cl.client_id) as Numar_comenzi from clienti Cl group by Cl.client_id, Cl.Nume, Cl.Prenume having
+					Numar_comenzi > ?) as Com';
+		$query = $this->db->query($sql, array($numar_comenzi));
+		$msg = "Nu exista clienti";
+		 $clienti = array();
+        if($query->result()){
+            foreach ($query->result() as $client) {
+				
+                $clienti[$client->Nume] = $client->Prenume;
+            }
+            return $clienti;
+        } else {
+            return false;
+        }
+	}
 	
 	
-	public function get_all_employees() {
-		$query = $this->db->query('select * from angajat');
+	
+	public function get_all_clients() {
+		$query = $this->db->query('select * from clienti');
 		if($query->num_rows() > 0) {
 			foreach($query->result() as $row) {
 				$data[] = $row;
@@ -84,10 +110,6 @@ class Model_user extends CI_Model {
 		return $data;
 	}
 	
-	public function get_employee_row($id_angajat) {
-		$this->db->where('idAngajat', $id_angajat);
-		$query = $this->db->get('angajat');
-		return $query->row();
-	} */
+
 
 }

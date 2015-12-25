@@ -54,7 +54,7 @@ public function index() {
 		{
 			//insert update table here
 			$this->model_employee->insert($params);
-			redirect('Welcome/index');		
+			redirect('Admin');		
 		}
 							
 	}

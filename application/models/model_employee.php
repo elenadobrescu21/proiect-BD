@@ -27,7 +27,11 @@ class Model_employee extends CI_Model {
 		$dataAngajarii = date('Y-m-d', strtotime($fields['Data_angajarii']));
 		$fields['Data_angajarii'] = $dataAngajarii;
 		$fields['Data_nasterii'] = $dataNasterii;
-		$this->db->insert($this->table, $fields);
+		$sql = 'INSERT INTO angajat (Nume,Prenume,CNP,Strada, Numar, Oras, Judet, Sex, Data_nasterii, Data_angajarii,Salariu,
+		Id_departament)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?,?)';
+		$this->db->query($sql, $fields);
+		//$this->db->insert($this->table, $fields);
 				
 	}
 	
@@ -37,7 +41,11 @@ class Model_employee extends CI_Model {
 						'Descriere' =>$params['descriere_angajat'],
 						'Poza' => $filename,
 						'Link_facebook' => $params['link_facebook']);
-		$this->db->insert('info_aditionale', $fields);
+		
+		$sql = 'INSERT INTO info_aditionale(Id_angajat,Studii, Descriere, Poza, Link_facebook)
+		VALUES(?,?,?,?,?)';
+		$this->db->query($sql, $fields);
+		//$this->db->insert('info_aditionale', $fields);
 		
 	}
 	
@@ -55,6 +63,54 @@ class Model_employee extends CI_Model {
 		return $data;
 		
 	}
+	
+	public function select_info_aditionale_curatenie() {
+		
+		 $query = $this->db->query('SELECT A.Nume, A.Prenume, info_aditionale.Poza,info_aditionale.Descriere, info_aditionale.Studii, info_aditionale.Link_facebook, AP.Nume_dep
+         FROM angajat A INNER JOIN info_aditionale  ON (info_aditionale.Id_angajat = A.idAngajat)
+         INNER JOIN departament AP ON A.Id_Departament=AP.id_departament where AP.id_departament=24');
+		 if($query->num_rows() > 0) {
+		 foreach($query->result() as $row) {
+				$data[] = $row;
+			}
+		}
+		
+		return $data;
+		
+	}
+	
+	public function select_info_aditionale_ingrijire() {
+		$sql = 'SELECT A.Nume, A.Prenume, info_aditionale.Poza,info_aditionale.Descriere, info_aditionale.Studii, info_aditionale.Link_facebook, AP.Nume_dep
+         FROM angajat A INNER JOIN info_aditionale  ON (info_aditionale.Id_angajat = A.idAngajat)
+         INNER JOIN departament AP ON A.Id_Departament=AP.id_departament where AP.id_departament= 26';
+		 $query = $this->db->query($sql);
+		 if($query->num_rows() > 0) {
+		 foreach($query->result() as $row) {
+				$data[] = $row;
+			}
+		}
+		
+		return $data;
+		
+	}
+	
+	public function get_angajati_by_service($id_serviciu) {
+		$sql = 'select A.idAngajat, A.Nume, A.Prenume from Angajat A, Departament D, Serviciu S where (D.id_departament = S.Id_dep) 
+			AND (A.Id_Departament = D.id_departament) and S.Id_serviciu = ?';
+		$query = $this->db->query($sql, $id_serviciu);
+		 $angajati = array();
+        if($query->result()){
+            foreach ($query->result() as $angajat) {
+				$nume = $angajat->Nume . " " . $angajat->Prenume;
+                $angajati[$angajat->idAngajat] = $nume;
+            }
+            return $angajati;
+        } else {
+            return FALSE;
+        }
+    } 
+		
+	
 	
 	function show_angajat_id($data){
 			$this->db->select('*');

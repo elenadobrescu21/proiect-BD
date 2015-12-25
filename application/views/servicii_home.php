@@ -6,6 +6,38 @@
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 </head>
+
+<script>
+
+jQuery(document).ready(function(){
+      $("#departament").change(function() {
+        var departament_id = $('#departament').val();
+        console.log(departament_id);
+
+        $.ajax({
+          type: "POST",
+          data: departament_id,
+          url: "<?= base_url() ?>Lista_servicii/get_services/" + departament_id ,
+
+          success: function(data){
+			  $('#serviciu').empty();
+            $.each(data, function(key1, val1){
+		     var lei = " lei";
+			 var puncte = ": ";
+            $('#serviciu').append("<li>"+key1+ String(puncte)+ +val1+ String(lei)+ "</li>");
+			console.log(key1);
+			console.log(val1);
+            });
+           }
+        
+         });
+       });
+     });
+
+
+
+
+</script>
 	
 <style>
 .my-container {
@@ -93,6 +125,11 @@ img {
 		font-family:Cardo;
 }
 
+#serviciu li {
+	text-align:left;
+}
+
+
 </style>
 <body>
 	<div class="my-container">
@@ -110,8 +147,8 @@ img {
 					<div class="main-navigation">
 					<ul class="nav-list">
 					<li class="first-item"><a class="item1" href="Echipa/index"><h4>Echipa<h4></a> </li>
-					<li class="second-item"><a class="item2" href="Lista_servicii/index"><h4>Servicii si preturi<h4></a> </li>
-					<li class="third-item"> <a class="item3" href="Formular_comanda"><h4>Formular comanda</h4></a> </li>
+					<li class="second-item"><a class="item2" href="<?php echo base_url() . "Lista_servicii/index"?>"><h4>Servicii<h4></a> </li>
+					<li class="third-item"> <a class="item3" href="#"><h4>Item 3</h4></a> </li>
 					</ul>
 					</div>
 					<h1> Important !</h1>
@@ -127,21 +164,30 @@ img {
 			 	<img src="http://i65.tinypic.com/sp7m7n.jpg" alt="Banner"> 
 			<h1> Bine ati venit la Home Serv !</h1>
 			
-			<h3> Home Serv SRL va sta la dispozitie cu urmatoarele servicii: </h3>
-		         <ul id="lista_servicii">
-	<?php foreach($deps as $d) { 
-             ?>   <li class="menu_item menu_item_one activ">
-                 <h4> <?php echo $d->Nume_dep ?></h4>
-                </li>
-	<?php }
-  ?>	
-            </ul>
+		   
+			<div class= "row">
+			<div class="col-lg-6">
+			<label for="f_dep"><h3>Departament</h3></label> 
+			<div>
+				<select id="departament" name="departament">
+					<option value=""></option>
+					<?php
+					foreach($deps as $d){
+						echo '<option value="' . $d->id_departament . '">' . $d->Nume_dep . '</option>';
+					}
+					?>
+				</select>
+			</div>
+			</div>
+			<div class="col-lg-6">
+			<div class="servicii">
+			  <label for="f_serviciu"><h3>Servicii</h3></label> 
+			<ul id="serviciu" name="f_serviciu" id="f_serviciu_label"> 
 				
-		<h2>Welcome <?php echo $username; ?>!</h2>
-		    <a href="Home/logout">Logout</a>
-		</div>
-
-
+			</ul> 
+		   </div>
+		   </div>
+            </div>
 			 </div>
 			</div>
 			 </div>
@@ -153,4 +199,3 @@ img {
 
 </body>
 </html>
-

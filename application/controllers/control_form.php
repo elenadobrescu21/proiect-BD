@@ -36,8 +36,6 @@ class Control_form extends CI_Controller {
 		 $this->output
            ->set_content_type("application/json")
            ->set_output(json_encode($this->Model_form->get_servicii_by_departament($departament_id)));
-      /*  header('Content-Type: application/x-json; charset=utf-8');
-		$data = $this->Model_form->get_servicii_by_departament($departament);
-            echo(json_encode($data)); */
+    
     } 	
 }

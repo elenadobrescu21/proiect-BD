@@ -49,7 +49,7 @@ body {
 	
 }
 
-.meditatii{
+.meditatii, .curatenie, .ingrijire{
 	margin-left:40px;
 }
 .facebook{
@@ -67,10 +67,10 @@ h3{
 <body>
 	<div class="main-content">
 	<h1 class="title"> Afla cine sunt angajatii nostri  </h1>
-	<h3> Meditatii </h3>
+	<h3 class="title"> Meditatii </h3>
 <div class= "meditatii">
   <?php  $i = 0; ?>
-	<?php foreach ($ang as $r) {
+	<?php foreach ($ang_meditatii as $r) {
 	?>
 	<div class="image-container">									
 	 <img src="<?php echo site_url('images/'.$r->Poza) ?>" width="175" height="200" />
@@ -88,12 +88,55 @@ h3{
 
 	</div>
 	
+	<h3 class="title"> Curatenie </h3>
+	
+<div class= "curatenie">
+  <?php  $i = 0; ?>
+	<?php foreach ($ang_curatenie as $r) {
+	?>
+	<div class="image-container">									
+	 <img src="<?php echo site_url('images/'.$r->Poza) ?>" width="175" height="200" />
+	
+	<p> <b> Nume: </b> <?php echo $r->Nume . " " . $r->Prenume ?>   </p>
+    <p> <b> Studii: </b><?php echo $r->Studii ?>   </p>	
+	<p> <b> Descriere:</b> <?php echo $r->Descriere ?> </p>
+	<p class="facebook"> <a href="<?php echo $r->Link_facebook ?>">  <b> Facebook </b></a> </p>
+     </div>
+ <?php  
+} 
+
+?>
+
+
+	</div>
+	
+	<h3 class="title"> Ingrijire </h3>
+	
+		
+<div class= "ingrijire">
+  <?php  $i = 0; ?>
+	<?php foreach ($ang_ingrijire as $r) {
+	?>
+	<div class="image-container">									
+	 <img src="<?php echo site_url('images/'.$r->Poza) ?>" width="175" height="200" />
+	
+	<p> <b> Nume: </b> <?php echo $r->Nume . " " . $r->Prenume ?>   </p>
+    <p> <b> Studii: </b><?php echo $r->Studii ?>   </p>	
+	<p> <b> Descriere:</b> <?php echo $r->Descriere ?> </p>
+	<p class="facebook"> <a href="<?php echo $r->Link_facebook ?>">  <b> Facebook </b></a> </p>
+     </div>
+ <?php  
+} 
+
+?>
+
+
+	</div>
+	
+	
+	
 </div>
    
-	
-	
-	
-
 
 </body>
 

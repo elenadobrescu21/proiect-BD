@@ -12,7 +12,10 @@ class Echipa extends CI_Controller {
 
 	public function index()
 	{
-		$data['ang'] = $this->model_employee->select_info_aditionale_meditatii();
+		$data['ang_meditatii'] = $this->model_employee->select_info_aditionale_meditatii();
+		$data['ang_curatenie'] = $this->model_employee->select_info_aditionale_curatenie();
+		$data['ang_ingrijire'] = $this->model_employee->select_info_aditionale_ingrijire();
+		
 		$this->load->view('echipa', $data);
 	}
 	

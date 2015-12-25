@@ -111,12 +111,12 @@ img {
 					<ul class="nav-list">
 					<li class="first-item"><a class="item1" href="Echipa/index"><h4>Echipa<h4></a> </li>
 					<li class="second-item"><a class="item2" href="Lista_servicii/index"><h4>Servicii si preturi<h4></a> </li>
-					<li class="third-item"> <a class="item3" href="Formular_comanda"><h4>Formular comanda</h4></a> </li>
+					<li class="third-item"> <a class="item3" href="#"><h4>Item 3</h4></a> </li>
 					</ul>
 					</div>
 					<h1> Important !</h1>
 					<h4> Pentru a putea apela la serviciile noastre trebuie sa aveti cont de client.  </h2>
-		       <h4>Click <a href="Login/create_member"> aici </a> pentru a va crea cont </h2>
+		       <h4>Click <a href="Login/register_form"> aici </a> pentru a va crea cont </h2>
 		    <h4>Click <a href="log_in_existing"> aici </a> pentru a va loga </h2>
 					</div>
 				</div>
@@ -137,9 +137,6 @@ img {
   ?>	
             </ul>
 				
-		<h2>Welcome <?php echo $username; ?>!</h2>
-		    <a href="Home/logout">Logout</a>
-		</div>
 
 
 			 </div>
@@ -153,4 +150,3 @@ img {
 
 </body>
 </html>
-
