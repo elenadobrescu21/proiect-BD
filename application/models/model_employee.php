@@ -79,6 +79,8 @@ class Model_employee extends CI_Model {
 		
 	}
 	
+	
+	
 	public function select_info_aditionale_ingrijire() {
 		$sql = 'SELECT A.Nume, A.Prenume, info_aditionale.Poza,info_aditionale.Descriere, info_aditionale.Studii, info_aditionale.Link_facebook, AP.Nume_dep
          FROM angajat A INNER JOIN info_aditionale  ON (info_aditionale.Id_angajat = A.idAngajat)
@@ -109,6 +111,63 @@ class Model_employee extends CI_Model {
             return FALSE;
         }
     } 
+	
+	public function get_toate_comenzile($nume, $prenume) {
+		$sql = 'select Cl.Nume as Nume_client, Cl.Prenume as Prenume_client, S.Nume_serviciu, C.Data, C.Ora from clienti Cl,
+				serviciu S, comanda C, angajat A where Cl.client_id = C.Id_client and S.Id_serviciu = C.Id_serviciu and
+				A.idAngajat = C.Id_angajat and A.Nume = ? and A.Prenume = ? order by C.Data, C.Ora ASC';
+		$query = $this->db->query($sql, array($nume, $prenume));
+		 $angajati = array();
+        if($query->result()){
+            foreach ($query->result() as $angajat) {
+				$nume = $angajat->Nume_client . " " . $angajat->Prenume_client;
+                $angajati[$nume . " " . $angajat->Data . " " . $angajat->Ora] = $angajat->Nume_serviciu;
+            }
+            return $angajati;
+        } else {
+            return FALSE;
+        }
+		
+	}
+	
+	public function get_employees_dep_salariu($nume_dep, $salariu) {
+		$sql = 'select A.Nume, A.Prenume, A.Salariu from Angajat A, Departament D where (A.Id_Departament = D.id_departament)
+				and D.Nume_dep = ? and A.Salariu > ?';
+		$query = $this->db->query($sql, array($nume_dep, $salariu));
+		$angajati = array();
+        if($query->result()){
+            foreach ($query->result() as $angajat) {
+				$nume = $angajat->Nume . " " . $angajat->Prenume;
+                $angajati[$nume] = $angajat->Salariu;
+				
+            }
+            return $angajati;
+        } else {
+            return FALSE;
+        }
+		
+	}
+	
+	public function get_angajati_dupa_nr_comenzi($departament) {
+		$sql = 'select A.Nume, A.Prenume, (select count(*) from comanda C where C.Id_angajat = A.idAngajat) as
+		Numar_comenzi from angajat A where A.Id_Departament =(select id_departament from departament D where D.Nume_dep = ?)
+		order by Numar_comenzi DESC;';
+		$query = $this->db->query($sql, $departament);
+	   
+	    $angajati = array();
+        if($query->result()){
+            foreach ($query->result() as $angajat) {
+				$nume = $angajat->Nume . " " . $angajat->Prenume;
+                $angajati[$nume] = $angajat->Numar_comenzi;
+				
+            }
+            return $angajati;
+        } else {
+            return FALSE;
+        }
+		
+		
+	}
 		
 	
 	
@@ -136,7 +195,8 @@ class Model_employee extends CI_Model {
 	}
 	
 	public function angajat_departament() {
-		$query = $this->db->query('select angajat.idAngajat, angajat.Nume, angajat.Prenume, departament.Nume_dep from angajat left join departament on departament.id_departament=angajat.Id_Departament order by angajat.Nume');
+		$query = $this->db->query('select angajat.idAngajat, angajat.Nume, angajat.Prenume, departament.Nume_dep from angajat left join 
+		departament on departament.id_departament=angajat.Id_Departament order by angajat.Nume');
 	   	if($query->num_rows() > 0) {
 			foreach($query->result() as $row) {
 				$data[] = $row;

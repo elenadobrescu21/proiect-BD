@@ -57,6 +57,29 @@ class Model_comanda extends CI_Model {
 		
 	}
 	
+	public function get_comanda_by_data($data) {
+		
+		$sql = 'select Cl.Nume as Nume_client, Cl.Prenume as Prenume_client, S.Nume_serviciu, A.Nume as Nume_angajat,
+				A.Prenume as Prenume_angajat from clienti Cl, serviciu S, angajat A, comanda C where
+				Cl.client_id = C.Id_client AND S.Id_serviciu = C.Id_serviciu AND A.idAngajat = C.Id_angajat and C.Data = ? order by Nume_client, Prenume_client ASC';
+		$query = $this->db->query($sql, $data);
+		$nume_client = "nume_client";
+		$serviciu = "serviciu";
+		$nume_angajat = "nume_angajat";
+		$comenzi = array();
+        if($query->result()){
+            foreach ($query->result() as $comanda) {
+		$comenzi[$comanda->Nume_client . " " . $comanda->Prenume_client] = $comanda->Nume_angajat. " " . $comanda->Prenume_angajat. " " . $comanda->Nume_serviciu;
+				//$comenzi[$serviciu] = $comanda->Nume_serviciu;
+				//$comenzi[$nume_angajat] = $comanda->Nume_angajat . " " . $comanda->Prenume_angajat;
+            }
+            return $comenzi;
+        } else {
+            return FALSE;
+        }
+		
+	}
+	
 
 
 }
