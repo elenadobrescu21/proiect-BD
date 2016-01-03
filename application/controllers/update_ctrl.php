@@ -28,9 +28,14 @@ class update_ctrl extends CI_Controller{
 		$nume = $this->input->post('nume_serviciu');
 		$pret = $this->input->post('pret_serviciu');
 		$data = array("Nume_serviciu" => $nume,
-		              "Pret" => $pret);
-		$this->model_serviciu->update_serviciu_id($id,$data);
-		$this->show_serviciu_id();
+		              "Pret" => $pret,
+					  "Id" => $id);
+		$sql = 'UPDATE serviciu
+		SET Nume_serviciu=?, Pret = ?
+        WHERE Id_serviciu = ?';
+		$this->db->query($sql, $data);
+	//	$this->model_serviciu->update_serviciu_id($id,$data);
+	//	$this->show_serviciu_id();
 				
 		redirect('Serviciu/lista_servicii');
 		
@@ -46,11 +51,14 @@ function update_angajat_id1() {
 		 $lunaAngajare = $this->input->post('lunaAngajare');
 		 $ziAngajare = $this->input->post('ziAngajare');
 
-				$data_nasterii = $yearOfBirth."-".$monthOfBirth."-".$dateOfBirth;
-				$data_angajarii = $anAngajare."-".$lunaAngajare."-".$ziAngajare;
+		$data_nasterii = $yearOfBirth."-".$monthOfBirth."-".$dateOfBirth;
+		$data_angajarii = $anAngajare."-".$lunaAngajare."-".$ziAngajare;
 				
-				$dataNasterii = date('Y-m-d', strtotime($fields['Data_nasterii']));
-				$dataAngajarii = date('Y-m-d', strtotime($fields['Data_angajarii']));
+		//$dataNasterii = date('Y-m-d', strtotime($fields['Data_nasterii']));
+		//$dataAngajarii = date('Y-m-d', strtotime($fields['Data_angajarii']));
+		
+		$dataNasterii = date('Y-m-d', strtotime($data_nasterii));
+		$dataAngajarii = date('Y-m-d', strtotime($data_angajarii));
 		$data = array(
 					'Nume'=>$this->input->post('nume_angajat'),
 					'Strada' => $this->input->post('strada_angajat'),
@@ -61,22 +69,32 @@ function update_angajat_id1() {
 					'Data_angajarii' => $dataAngajarii,
 					'Data_nasterii' => $dataNasterii,
 					'Id_departament' => $this->input->post('Id_departament'),
-					'Salariu' => $this->input->post('Salariu_angajat'));
-					$this->model_employee->update_angajat_id1($id,$data);
-							$this->show_angajat_id();
+					'Salariu' => $this->input->post('Salariu_angajat'),
+					'Id' => $id);
+					
+		$sql = 'UPDATE angajat
+		SET Nume=?,Strada=?, Numar=?, Judet=?, Oras=?, Sex=?, Data_angajarii=?, Data_nasterii=?, Id_departament = ?, Salariu = ?
+        WHERE idAngajat= ?';
+		$this->db->query($sql, $data);
+		//$this->model_employee->update_angajat_id1($id,$data);
+		$this->show_angajat_id();
 				
 			redirect('Angajati');
 		}
 		
 	public function delete_serviciu($serviciu_id) {
-		$this->db->where('Id_serviciu', $serviciu_id);
-		$this->db->delete('serviciu');
+		$sql = 'delete from serviciu where Id_serviciu = ?';
+		$this->db->query($sql, $serviciu_id);
+		//$this->db->where('Id_serviciu', $serviciu_id);
+		//$this->db->delete('serviciu');
 		redirect('Serviciu/lista_servicii');
 	}
 		
-	public function delete($angajat_id) {
-		$this->db->where('idAngajat', $angajat_id);
-		$this->db->delete('angajat');
+	public function delete($angajat_id){
+		$sql = 'DELETE FROM angajat WHERE idAngajat=?';
+		$this->db->query($sql, $angajat_id);
+		//$this->db->where('idAngajat', $angajat_id);
+		//$this->db->delete('angajat');
 		redirect('Angajati');
 	}
 }

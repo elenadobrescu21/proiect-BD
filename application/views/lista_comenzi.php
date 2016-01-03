@@ -66,9 +66,46 @@ h4{
 ?>
 
 </table>
+
+<h1 class="title"> Cele mai apropiate comenzi </h1>
+
+
+<div class="tabel-comenzi">
+<table class="table table-striped">
+<thead>
+<th> Nume client </th>
+<th> Serviciu </th>
+<th> Nume angajat </th>
+<th> Data </th>
+<th> Ora </th>
+
+</thead>
+
+
+<?php foreach ($comenzi_apropiate as $r) {
+	?>
+	 <tr>										
+	<td> <?php echo $r->Nume_client . " " . $r->Prenume_client; ?> </td>
+	<td> <?php echo  $r->Nume_serviciu ?> </td>
+	<td> <?php echo $r->Nume_angajat . " " . $r->Prenume_angajat;  ?> </td>
+	<td> <?php echo $r->Data_comanda; ?> </td>
+	<td> <?php echo $r->Ora; ?> </td>
+	
+	
+   </tr> 
+ <?php  
+} 
+
+?>
+
+</table>
+
+</div>
+
 <div class="back">
 	<button class="buton btn btn-default btn-lg"> <a href='<?php echo site_url('Admin') ?>'>Back to admin panel</a>  </button> 
 </div>
+
 </body>
 
 </html>

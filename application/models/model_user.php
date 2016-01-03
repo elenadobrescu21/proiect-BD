@@ -36,7 +36,12 @@ class Model_user extends CI_Model {
 					  'user_email' => $this->input->post('email'),
 					  'telephone' => $this->input->post('telephone'),
 					  'Nume' => $this->input->post('first_name'),
-					  'Prenume' => $this->input->post('last_name') ) ;
+					  'Prenume' => $this->input->post('last_name'),
+					  'Oras' => $this->input->post('oras'),
+					  'Judet' => $this->input->post('judet'),
+					  'Strada' => $this->input->post('strada'),
+					  'Numar' => $this->input->post('numar')
+						);
 		
 		$this->db->insert('clienti', $fields);
 				
@@ -82,9 +87,9 @@ class Model_user extends CI_Model {
 	function clienti_x_comenzi($numar_comenzi) {
 		$sql = 'select Nume, Prenume from (select Cl.client_id, Cl.Nume, Cl.Prenume, (select COUNT(*) from comanda C 
 				where C.id_client = Cl.client_id) as Numar_comenzi from clienti Cl group by Cl.client_id, Cl.Nume, Cl.Prenume having
-					Numar_comenzi > ?) as Com';
+					Numar_comenzi = ?) as Com order by Nume, Prenume ASC';
 		$query = $this->db->query($sql, array($numar_comenzi));
-		$msg = "Nu exista clienti";
+		$msg = "Nu exista clienti cu " . $numar_comenzi . " ";
 		 $clienti = array();
         if($query->result()){
             foreach ($query->result() as $client) {
@@ -93,8 +98,27 @@ class Model_user extends CI_Model {
             }
             return $clienti;
         } else {
-            return false;
+            return $msg;
         }
+	}
+	
+	function clienti_cu_cele_mai_multe_comenzi() {
+		$sql = 'select Cl.client_id, Cl.Nume, Cl.Prenume, (select COUNT(*) from comanda C where C.id_client = Cl.client_id) as Numar_comenzi 
+		from clienti Cl having Numar_comenzi =(select max(Com.Numar_comenzi) as Numar_maxim_comenzi from (select Cl.client_id, Cl.Nume, Cl.Prenume, 
+		(select COUNT(*) from comanda C 
+		where C.id_client = Cl.client_id) as Numar_comenzi from clienti Cl 
+		group by Cl.client_id, Cl.Nume, Cl.Prenume) as Com )
+		order by Cl.Nume, Cl.Prenume ASC';
+		
+		$query = $this->db->query($sql);
+	    if($query->num_rows() > 0) {
+			foreach($query->result() as $row) {
+				$data[] = $row;
+			}
+		}
+		
+		return $data;
+		
 	}
 	
 	

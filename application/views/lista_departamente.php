@@ -11,7 +11,7 @@
 	margin-bottom:30px;
 }
 
-.tabel-angajati{
+.tabel-departamente{
 	margin-left:100px;
 	margin-right:100px;
 	text-align: center;
@@ -39,22 +39,25 @@ th, td{
 <body>
 <h1 class="title"> Lista departamentelor firmei </h1>
 
-<div class="tabel-angajati">
+
+<div class="tabel-departamente">
 <table class="table table-striped">
 <thead>
 <th> Nume departament </th>
-<th> Nume manager  </th>
-
+<th> Numar angajati </th>
+<th> Salariu mediu </th>
+<th> Nume manager </th>
 </thead>
 
 
-<?php foreach ($dt as $r) {
+<?php foreach ($nr_ang as $r) {
 	?>
 	 <tr>										
 	<td> <?php echo $r->Nume_dep ?> </td>
+	<td> <?php echo  $r->Total_angajati ?> </td>
+	
+	<td> <?php echo $r->Sal_mediu ?> </td>
 	<td> <?php echo  $r->Nume . " " . $r->Prenume ?> </td>
-	
-	
    </tr> 
  <?php  
 } 
@@ -62,12 +65,13 @@ th, td{
 ?>
 
 </table>
-</div>
 
  <div class="adauga">          
 	<button class="buton btn btn-default  btn-lg"> <a href="index">Adauga departament </a>  </button>
-	<button class="buton btn btn-default btn-lg"> <a href='<?php echo site_url('Admin') ?>''>Back to admin panel</a>  </button> 
+	<button class="buton btn btn-default btn-lg"> <a href='<?php echo site_url('Admin') ?>'>Back to admin panel</a>  </button> 
  </div>
+ 
+ 
 
 </body>
 

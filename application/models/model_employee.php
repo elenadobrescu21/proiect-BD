@@ -51,9 +51,11 @@ class Model_employee extends CI_Model {
 	
 	public function select_info_aditionale_meditatii() {
 		 $meditatii="Meditatii";
-		 $query = $this->db->query('SELECT A.Nume, A.Prenume, info_aditionale.Poza,info_aditionale.Descriere, info_aditionale.Studii, info_aditionale.Link_facebook, AP.Nume_dep
+		 
+		 $sql ='SELECT A.Nume, A.Prenume, info_aditionale.Poza,info_aditionale.Descriere, info_aditionale.Studii, info_aditionale.Link_facebook, AP.Nume_dep
          FROM angajat A INNER JOIN info_aditionale  ON (info_aditionale.Id_angajat = A.idAngajat)
-         INNER JOIN departament AP ON A.Id_Departament=AP.id_departament where AP.id_departament=25');
+         INNER JOIN departament AP ON A.Id_Departament=AP.id_departament where AP.Nume_dep = ?';
+		 $query = $this->db->query($sql, $meditatii);
 		 if($query->num_rows() > 0) {
 		 foreach($query->result() as $row) {
 				$data[] = $row;
@@ -66,9 +68,11 @@ class Model_employee extends CI_Model {
 	
 	public function select_info_aditionale_curatenie() {
 		
-		 $query = $this->db->query('SELECT A.Nume, A.Prenume, info_aditionale.Poza,info_aditionale.Descriere, info_aditionale.Studii, info_aditionale.Link_facebook, AP.Nume_dep
+		 $curatenie = "Curatenie";
+		 $sql = 'SELECT A.Nume, A.Prenume, info_aditionale.Poza,info_aditionale.Descriere, info_aditionale.Studii, info_aditionale.Link_facebook, AP.Nume_dep
          FROM angajat A INNER JOIN info_aditionale  ON (info_aditionale.Id_angajat = A.idAngajat)
-         INNER JOIN departament AP ON A.Id_Departament=AP.id_departament where AP.id_departament=24');
+         INNER JOIN departament AP ON A.Id_Departament=AP.id_departament where AP.Nume_dep = ?';
+		 $query = $this->db->query($sql, $curatenie);
 		 if($query->num_rows() > 0) {
 		 foreach($query->result() as $row) {
 				$data[] = $row;
@@ -82,10 +86,12 @@ class Model_employee extends CI_Model {
 	
 	
 	public function select_info_aditionale_ingrijire() {
+		
+		$ingrijire = "Ingrijire bolnavi";
 		$sql = 'SELECT A.Nume, A.Prenume, info_aditionale.Poza,info_aditionale.Descriere, info_aditionale.Studii, info_aditionale.Link_facebook, AP.Nume_dep
          FROM angajat A INNER JOIN info_aditionale  ON (info_aditionale.Id_angajat = A.idAngajat)
-         INNER JOIN departament AP ON A.Id_Departament=AP.id_departament where AP.id_departament= 26';
-		 $query = $this->db->query($sql);
+         INNER JOIN departament AP ON A.Id_Departament=AP.id_departament where AP.Nume_dep = ?';
+		 $query = $this->db->query($sql, $ingrijire);
 		 if($query->num_rows() > 0) {
 		 foreach($query->result() as $row) {
 				$data[] = $row;
@@ -98,7 +104,7 @@ class Model_employee extends CI_Model {
 	
 	public function get_angajati_by_service($id_serviciu) {
 		$sql = 'select A.idAngajat, A.Nume, A.Prenume from Angajat A, Departament D, Serviciu S where (D.id_departament = S.Id_dep) 
-			AND (A.Id_Departament = D.id_departament) and S.Id_serviciu = ?';
+			AND (A.Id_Departament = D.id_departament) and S.Id_serviciu = ? order by A.Nume, A.Prenume';
 		$query = $this->db->query($sql, $id_serviciu);
 		 $angajati = array();
         if($query->result()){
@@ -168,6 +174,25 @@ class Model_employee extends CI_Model {
 		
 		
 	}
+	
+	public function count_angajati_in_departament($nume_dep) {
+		$sql = 'select D.Nume_dep, count(A.Id_Departament) as Total_angajati from departament D left join Angajat A on
+					A.Id_Departament = D.id_departament where D.Nume_dep = ?';
+		$query = $this->db->query($sql, $nume_dep);
+		
+		$departamente= array();
+        if($query->result()){
+            foreach ($query->result() as $d) {
+			
+                $departamente[$d->Nume_dep] = $d->Total_angajati;
+				
+            }
+            return $departamente;
+        } else {
+            return FALSE;
+        }
+		
+	}
 		
 	
 	
@@ -182,6 +207,8 @@ class Model_employee extends CI_Model {
 	
 	
 	function update_angajat_id1($id,$data){
+		
+	
 		$this->db->where('idAngajat', $id);
 		$this->db->update('angajat', $data);
   }
@@ -195,8 +222,8 @@ class Model_employee extends CI_Model {
 	}
 	
 	public function angajat_departament() {
-		$query = $this->db->query('select angajat.idAngajat, angajat.Nume, angajat.Prenume, departament.Nume_dep from angajat left join 
-		departament on departament.id_departament=angajat.Id_Departament order by angajat.Nume');
+		$query = $this->db->query('select A.idAngajat, A.Nume, A.Prenume, D.Nume_dep from angajat A inner join departament D on
+                                  D.id_departament=A.Id_Departament order by A.Nume, A.Prenume');
 	   	if($query->num_rows() > 0) {
 			foreach($query->result() as $row) {
 				$data[] = $row;

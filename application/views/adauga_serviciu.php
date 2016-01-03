@@ -29,7 +29,7 @@
 <body>
 <h1 class="title"> Adauga serviciu </h1>
 <div class="formular">
-<form action="Serviciu" method="POST" class="form-horizontal">
+<form action="index" method="POST" class="form-horizontal">
 
 	<div>
 	<label for="Nume" class="control-label"> Nume </label>

@@ -10,18 +10,12 @@ class Model_serviciu extends CI_Model {
 	
 	public function insert_serviciu($params) {
 	
-	
 	$fields= array('Nume_serviciu' => $params['Nume_serviciu'],
 					  'Pret' => $params['Pret'],
 					  'Id_dep' => $params['id_departament']) ;
-					
-		$this->db->insert($this->table, $fields);
-		/*$nume = $params['Nume_serviciu'];
-		$Pret = $params['Pret'];
-		$id = $params['id_departament'];
-		$sql = "insert into serviciu(Nume_serviciu, Pret,Id_dep) values('$params[Nume_serviciu]', $Pret, $id)";
-		//$sql = "insert into departament(Nume_dep, Id_manager) values('$params[Nume_dep]', $id )";
-		$this->db->query($sql);  */
+			
+		$sql = "insert into serviciu(Nume_serviciu, Pret,Id_dep) values(?,?,?)";
+		$this->db->query($sql, $fields);  
 			
 	}
 	
@@ -45,10 +39,10 @@ class Model_serviciu extends CI_Model {
 			return $result;
 	}
 	
-	function update_serviciu_id($id,$data){
+	/*function update_serviciu_id($id,$data){
 		$this->db->where('Id_serviciu', $id);
 		$this->db->update('serviciu', $data);
-  }
+  } */
 	
 	public function get_all_services() {
 		

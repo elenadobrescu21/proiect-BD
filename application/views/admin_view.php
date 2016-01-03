@@ -13,10 +13,13 @@
 	text-align:center;
 }
 .main-container{
+	padding-top:20px;
+	padding-bottom:20px;
 	margin-top:30px;
 	margin-left:auto;
 	margin-right:auto;
 	border:1px solid black;
+	
 }
 .angajati, .departamente, .servicii{
 	text-align:center;
@@ -31,6 +34,7 @@
 .buton-main{
 	width:150px;
 }
+
 
 
 </style>
@@ -73,7 +77,7 @@
     </div>
 	<div class="servicii col-md-4">
 	<div class="buton">
-	 <button class="buton-main btn btn-default  btn-lg"> <a href="Serviciu/lista_servicii">Statistici</a>  </button>
+	 <button class="buton-main btn btn-default  btn-lg"> <a href="Statistici">Statistici</a>  </button>
 	 </div>
 	</div>
 	

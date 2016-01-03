@@ -11,6 +11,7 @@ class Departament extends CI_Controller {
 	
 	public function lista_departamente() {
 		$data['dt'] = $this->model_departament->departament_manager();
+		$data['nr_ang'] = $this->model_departament->count_angajati_in_dep();
 		$this->load->view('lista_departamente', $data);
 	}
 	

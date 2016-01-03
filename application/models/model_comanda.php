@@ -61,7 +61,8 @@ class Model_comanda extends CI_Model {
 		
 		$sql = 'select Cl.Nume as Nume_client, Cl.Prenume as Prenume_client, S.Nume_serviciu, A.Nume as Nume_angajat,
 				A.Prenume as Prenume_angajat from clienti Cl, serviciu S, angajat A, comanda C where
-				Cl.client_id = C.Id_client AND S.Id_serviciu = C.Id_serviciu AND A.idAngajat = C.Id_angajat and C.Data = ? order by Nume_client, Prenume_client ASC';
+				Cl.client_id = C.Id_client AND S.Id_serviciu = C.Id_serviciu AND A.idAngajat = C.Id_angajat and C.Data = ?
+				order by Nume_client, Prenume_client ASC';
 		$query = $this->db->query($sql, $data);
 		$nume_client = "nume_client";
 		$serviciu = "serviciu";
@@ -80,6 +81,22 @@ class Model_comanda extends CI_Model {
 		
 	}
 	
+	public function comanda_cea_mai_apropiata() {
+		$sql = 'select Cl.Nume as Nume_client, Cl.Prenume as Prenume_client, S.Nume_serviciu, A.Nume as Nume_angajat,
+		A.Prenume as Prenume_angajat, C.Data as Data_comanda, C.Ora from clienti Cl, serviciu S, angajat A, comanda C where
+		Cl.client_id = C.Id_client AND S.Id_serviciu = C.Id_serviciu AND A.idAngajat = C.Id_angajat
+		having Data_comanda = (select min(Data) from comanda)';
+		
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0) {
+			foreach($query->result() as $row) {
+				$data[] = $row;
+			}
+		}
+		
+		return $data;
+		
+	}
 
 
 }

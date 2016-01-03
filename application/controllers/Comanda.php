@@ -12,6 +12,7 @@ class Comanda extends CI_Controller {
 	public function index () {
 		
 		$data['comenzi'] = $this->model_comanda->get_detalii_comanda();
+		$data['comenzi_apropiate'] = $this->model_comanda->comanda_cea_mai_apropiata();
 		$this->load->view('lista_comenzi', $data);
 	}
 }

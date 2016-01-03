@@ -52,6 +52,22 @@
 	<input type="password" class="form-control" name="password_confirm" placeholder="Confirm password" />
 	</div>
 	<div>
+	<label for="Email" class="control-label">Oras </label>
+	<input type="text" class="form-control" name="oras" placeholder="Oras" />
+	</div>
+	<div>
+	<label for="Email" class="control-label"> Judet </label>
+	<input type="text" class="form-control" name="judet" placeholder="Judet" />
+	</div>
+	<div>
+	<label for="Email" class="control-label"> Strada</label>
+	<input type="text" class="form-control" name="strada" placeholder="Strada" />
+	</div>
+	<div>
+	<label for="Email" class="control-label">Numar </label>
+	<input type="text" class="form-control" name="numar" placeholder="Numar" />
+	</div>
+	<div>
 	<label for="Email" class="control-label"> Email </label>
 	<input type="text" class="form-control" name="email" placeholder="Email" />
 	</div>

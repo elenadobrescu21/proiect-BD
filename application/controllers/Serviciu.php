@@ -33,7 +33,10 @@ class Serviciu extends CI_Controller {
 		{
 			//insert update table here
 			$this->model_serviciu->insert_serviciu($params);
+			redirect('Serviciu/lista_servicii');
 		}
 		//$this->load->view('adauga_departament');
 	}
+	
+
 }

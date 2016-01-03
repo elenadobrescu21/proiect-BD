@@ -6,6 +6,7 @@ class Statistici extends CI_Controller {
  {
    parent::__construct();
    $this->load->model(array('model_employee', 'model_departament', 'model_serviciu', 'model_user', 'model_comanda'));
+   $this->load->helper('url');
  }
  
  function index()
@@ -32,8 +33,13 @@ class Statistici extends CI_Controller {
         $this->load->model('model_employee','', TRUE);   
 	   
 		$pieces = explode("_", $data);
+		if(sizeof($pieces) == 3) {
+			$nume_dep = $pieces[0] . ' ' . $pieces[1];
+			$salariu = $pieces[2];
+		} else {
 		$nume_dep = $pieces[0];
 		$salariu = $pieces[1];
+		}
 		  $this->output
            ->set_content_type("application/json")
          ->set_output(json_encode($this->model_employee->get_employees_dep_salariu($nume_dep, $salariu)));
@@ -64,6 +70,22 @@ class Statistici extends CI_Controller {
 		  $this->output
            ->set_content_type("application/json")
          ->set_output(json_encode($this->model_employee->get_angajati_dupa_nr_comenzi($departament)));
+    
+		
+	}
+	
+	function numar_angajati_in_departament($departament) {
+		
+		$this->load->model('model_employee','', TRUE);  
+
+		if (strpos($departament, '_') !== FALSE) {
+			$pieces = explode("_", $departament);
+			$departament = $pieces[0]. ' ' . $pieces[1];
+		}
+		
+		  $this->output
+           ->set_content_type("application/json")
+         ->set_output(json_encode($this->model_employee->count_angajati_in_departament($departament)));
     
 		
 	}

@@ -13,7 +13,7 @@ class Clienti extends CI_Controller {
 	
 	$data['clients'] = $this->model_user->get_all_clients();
 	$data['TotalClienti'] = $this->model_user->count_all_clients();
-	$data['faraComenzi'] = $this->model_user->clienti_fara_comenzi();
+	$data['MaxComenzi'] = $this->model_user->clienti_cu_cele_mai_multe_comenzi();
     $this->load->view('lista_clienti', $data);
  }
  

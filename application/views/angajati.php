@@ -99,7 +99,7 @@
 	<label for="DataAngajarii" class="control-label"> Data angajarii </label>
 	<select name="anAngajare" class="input-select form-control">
 	<option value="">An</option>
-	<?php for ($i = 1980; $i< 2016; $i++) : ?>
+	<?php for ($i = 2006; $i< 2016; $i++) : ?>
 	<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
 	<?php endfor; ?>
 	</select>

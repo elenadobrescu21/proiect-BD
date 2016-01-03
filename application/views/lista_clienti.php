@@ -37,6 +37,19 @@ ul {
  list-style: none; 
 }
 
+.x-comenzi{
+	margin-top:30px;
+}
+
+.tabel-max-comenzi {
+	margin-top:63px;
+}
+
+.back{
+	margin-top:30px;
+	text-align:center;
+}
+
 
 </style>
 
@@ -54,19 +67,29 @@ jQuery(document).ready(function(){
           url: "<?= base_url() ?>Clienti/get_clienti/" + numar_comenzi ,
 
           success: function(data){
-			  $('#clienti').empty();
+			  $('#dynamictable').empty();
+			   $('#dynamictable').append('<table class='+ 'table' + ' ' + 'table-striped' +'></table>');
+			 var table = $('#dynamictable').children(); 
+			table.append("<thead><th> Nume </th>  <th> Prenume </th> </thead>")
             $.each(data, function(key1, val1){
-		   
-            $('#clienti').append("<li>"+key1+ ' '  +val1+  "</li>");
+				
+			table.append("<tr><td>" + key1 + "</td><td>" +val1+  "</td></tr>");
+			table.addClass('table table-striped');
 			console.log(key1);
 			console.log(val1);
-            });
+          
+            }); 
            }
         
          }); 
-       });
-     });
-
+	   
+	   
+	   
+	   
+		});
+	   
+    });
+	
 
 
 
@@ -106,26 +129,34 @@ jQuery(document).ready(function(){
 
 		<div class="second-content">
 		<div class="row">
-			<div class=" fara-comenzi col-lg-6">
-				<h2> Useri fara comenzi </h2>
-				<ul>
-				<?php foreach ($faraComenzi as $r) {
+			<div class="max-comenzi col-lg-6">
+				<h2> Clienti cu cele mai multe comenzi </h2>
+				<table class="tabel-max-comenzi table table-striped">
+				<thead>
+					<th> Nume client </th>
+					<th> Numar comenzi  </th>
+				
+					</thead>
+				<?php foreach ($MaxComenzi as $r) {
 						?>
-					<li> <h3> <?php echo $r->Nume . " " . $r->Prenume ; ?></h3> </li>
+						<tr>
+						<td> <?php echo $r->Nume . " " . $r->Prenume ?> </td>
+						<td> <?php echo $r->Numar_comenzi ?> </td>
+				        </tr>
 					 <?php  
 					} 
 
 					?>
 				
 				
-				</ul>
+			</table>
 				
 	
 			</div>
 			
 			<div class="col-lg-6">
-			<h2> Useri cu mai mult de x comenzi</h2>
-			
+			<h2> Useri cu x comenzi</h2>
+			<div class="x-comenzi">
 			<label for="Numar comenzi" class="control-label"> Numar comenzi </label>
 				<input type="text" id="numar_comenzi" name="numar_comenzi" /> <span>
 			
@@ -133,17 +164,19 @@ jQuery(document).ready(function(){
 			
 			</span>
 			
+			</div>
 			
-			
-			<div>
-			<ul id="clienti" name="clienti" > 
-				
-			</ul> 
+			<div id="dynamictable">
+		
 		   </div>
 		
 			</div>
 		</div>
 		</div>
+		
+<div class="back">
+	<button class="buton btn btn-default btn-lg"> <a href='<?php echo site_url('Admin') ?>'>Back to admin panel</a>  </button> 
+</div>
 	
 
  
