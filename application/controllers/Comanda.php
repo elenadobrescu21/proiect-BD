@@ -2,17 +2,15 @@
 
 class Comanda extends CI_Controller {
 	
-	public function __construct() {
-		parent::__construct();
+  public function __construct() {
+     parent::__construct();
+     $this->load->model(array('model_employee', 'model_departament', 'model_serviciu', 'model_user', 'model_comanda'));
 		
-		$this->load->model(array('model_employee', 'model_departament', 'model_serviciu', 'model_user', 'model_comanda'));
-		
-	}
+   }
 	
-	public function index () {
-		
-		$data['comenzi'] = $this->model_comanda->get_detalii_comanda();
-		$data['comenzi_apropiate'] = $this->model_comanda->comanda_cea_mai_apropiata();
-		$this->load->view('lista_comenzi', $data);
-	}
+  public function index () {
+      $data['comenzi'] = $this->model_comanda->get_detalii_comanda();
+      $data['comenzi_apropiate'] = $this->model_comanda->comanda_cea_mai_apropiata();
+      $this->load->view('lista_comenzi', $data);
+  }
 }
