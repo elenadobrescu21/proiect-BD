@@ -8,7 +8,6 @@ class Login extends CI_Controller {
 	  $this->load->model(array('model_employee', 'model_departament', 'model_serviciu', 'model_user'));
 	}
 
-
 	public function login_form() {
 	  $this->load->view('login_form');
 	}
@@ -16,7 +15,6 @@ class Login extends CI_Controller {
 	public function register_form() {
 	  $this->load->view('register_page');
 	}
-	
 	
 	public function create_member() {
 	  $this->load->library('form_validation');
