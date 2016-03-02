@@ -2,19 +2,16 @@
  
 class Admin extends CI_Controller {
  
- function __construct()
- {
-   parent::__construct();
-    $this->load->model(array('model_employee', 'model_departament', 'model_serviciu'));
- }
+ 	function __construct() {
+   	  parent::__construct();
+   	  $this->load->model(array('model_employee', 'model_departament', 'model_serviciu'));
+        }
  
- function index()
- {
-   $this->load->view('admin_view');
-   	$data['dt'] = $this->model_employee->get_all_employees();
-	$data['ang'] = $this->model_employee->count_all_employees();
- }
- 
+ 	function index() {
+   	  $this->load->view('admin_view');
+   	  $data['dt'] = $this->model_employee->get_all_employees();
+	  $data['ang'] = $this->model_employee->count_all_employees();
+	}
 }
  
 ?>
